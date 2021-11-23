@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIY Messenger</title>
+    <style>
+        body {
+            background-image: url('http://cdn.backgroundhost.com/backgrounds/subtlepatterns/pool_table.png');
+            background-repeat: repeat;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        h1{
+            text-align: center;
+            font-size: 8em;
+            color: antiquewhite;
+        }
+        h3{
+            text-align: center;
+            font-size: 4em;
+            color: burlywood;
+        }
+        form{
+            align-self: center;
+        }
+    </style>
+</head>
+<body>
+    <h1> Hit me on my beeper</h1>
+    <!--Design is my thing-->
+    <h3> Send me a message</h3>
+    <form action="./send_message" method="post">
+        <fieldset>
+            <legend>Send me a message</legend>
+            <input type="text" name="message">
+            <button>GO GO GO!</button>
+        </fieldset>
+    </form>
+    <br>
+    <h3>When was the button pressed last?</h3>
+    <p id="status">No response from gateway yet...</p>
+    <button id="update">What about now?</button>
+
+</body>
+</html>
