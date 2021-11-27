@@ -30,12 +30,34 @@ We are working with the [LILYGO TTGO T-Display](https://www.aliexpress.com/item/
 * 16MB of flash
 
 # Starting a new project
-<img align="left" src="resources/platformio_icon.png" width="80em">We're going to start a new project via the Platform IO home screen. Open the *Quick Access* panel to the left of your VSCode window.
 
-Or use the command pallet via `[ctrl] + [Shift] + [P]` on windows and select `PlatformIO: Home`
+We're going to start a new project with Platform IO home screen. Open the *Quick Access* panel to the left of your VSCode window and select `Projects & COnfiguration`
 
+![](resources/platformio_icon.png)
 
+Or use the command pallet via `[ctrl]+[Shift]+[P]` on windows and select `PlatformIO: Home`.
+Then navigate to  `Projects` via the button to the left 
 
-<img align="left" src="resources/platformio_projects.png" width="80em"> Select `Project` via the button to the left and  click onc`create new project`
+![](resources/platformio_projects.png) 
 
-### Board Wizard
+From the projects screen select `create new project`
+
+![](resources/platformio_create.png)
+
+## Board Wizard
+The board wizard is a blessing and a curse. It has over 1000 of the most common boards, but there are many other variants not listed, especially from chinese companies. Most development boards from popular manufacturers like [Adafruit](https://adafruit.com), [Sparkfun](https://sparkfun.com), [Arduino](https://arduino.com) are available...... 
+
+Unfortunately the bord for today is not! So we're going to use a substitute that is similar in all of the ways that matter.
+
+### Parameters:
+| Field | Setting |
+---|---
+Name | <whatever makess sense to you\>
+Board | ESP32 Thing
+Framework | Arduino
+Location | [x] Default
+
+### Screenshot:
+
+<img src="resources/platformio_wizard.png" width="600em">
+

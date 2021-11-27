@@ -1,10 +1,7 @@
 #include <Arduino.h>
 #include <TFT_eSPI.h>
+// Add the WiFi library
 #include <WiFi.h>
-// Add the AWS IoT Library
-#include <WiFiClientSecure.h>
-#include <MQTTClient.h>
-#include "secrets.h"
 
 // Button definitions
 const char BUTTON_0 = 0;
@@ -15,18 +12,8 @@ TFT_eSPI tft = TFT_eSPI();
 char buff[512];
 
 // WiFi Parameters
-const char* SSID = "TheSanctuary_2";
-const char* PASSWORD = "88helicopter88";
-
-// AWS IoT instance
-WiFiClientSecure net = WiFiClientSecure();
-MQTTClient client = MQTTClient(1024);
-
-char* HOST_ADDRESS = "https://abc.com";
-char* CLIENT_ID = "that thingo";
-char payload[512];
-char rcvdPayload[512];
-
+const char* ssid = "IP a Lot";
+const char* password = "I Was Zero Cool";
 
 void setup() {
   Serial.begin(115200);
@@ -34,8 +21,6 @@ void setup() {
 
   pinMode(BUTTON_0, INPUT_PULLUP);
   pinMode(BUTTON_1, INPUT_PULLUP);
-
-  Serial.print(private_pem_key);
 
   Serial.print("Initialise LCD");
   
@@ -48,22 +33,18 @@ void setup() {
   tft.println(" Hello World ");
 
   Serial.println("Connecting to WiFi");
-  WiFi.begin(SSID, PASSWORD);
+  WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED){
     delay(200);
     Serial.print(".");
   }
-
+  // Output a carridge return
+  // There are better string formatters and dedicated serial debugging tools for logging
+  // Today we are keeping things simple and matching the style of other resources
   Serial.println();
   Serial.println("WiFi Connected!");
 
   tft.print(WiFi.localIP());
-
-  // Prepare credentials
-  net.setCACert(AWS_CERT_CA);
-  net.setCertificate(AWS_CERT_CRT);
-  net.setPrivateKey(AWS_CERT_PRIVATE);
-
   sleep(3);
 }
 
