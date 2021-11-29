@@ -35,27 +35,45 @@ void setup() {
 int counter = 0;
 
 void loop() {
-  // Simple multi line string formatting
-  Serial.print("loop ");
-  Serial.println(counter);
   
-  // Interacting with the display writes individual pixels with no context
-  // So existing pixels will remain set if we dont refresh them
-  // The easiest way to do this is by filling the entire background again and writing everything fresh
-  tft.fillScreen(TFT_GREEN);
 
-  // Things look cramped in the top corner
-  // Lets move the cursor out a little bit and make the text larger
-  tft.setCursor(20, 20, 2);
+  if(digitalRead(BUTTON_0) == false){
+    Serial.println("Button 0 is pressed");
+    // Increment the counter
+    counter++;
+  }
+
+  // read the digital input BUTTON_1
+  if (digitalRead(BUTTON_1) == false){
+      Serial.println("Button 1 is pressed");
+      //decrement the counter
+      counter--;
+  }
+  Serial.print("counter value: ");
+  Serial.println(counter);
+
+  // This graphic library is very lightweight
+  // There is no DOM, or layers or contextual smarts.
+  // It sets pixel values and that is it!
+  // This means pixels must be cleared when numbers change 
+  tft.fillScreen(TFT_LIGHTGREY);
+
+  // The cursor must be returned back to the start of the screen too
+  // X, Y, font style are set with a single command
+  tft.setCursor(10,10,1);
+
+  // We also want to make the text more legible
+  // This code could also be moved to 'setup()' 
   tft.setTextSize(3);
 
-  // Lets write the counter to the display
+  // Update the LCD with the counter value
+  // The library will automatically interpret the integer value and convert it to a string
   tft.println(counter);
 
-  counter++;
   sleep(1);
 }
 
 // Extension options
-// Use the button imputs to select between 4 different colours
+// How can you stop the display from flickering when there is no activity?
+// What happens with button input if sleep time is reduced?
 // Adjust the colour of the background slowly over time #PRIDE

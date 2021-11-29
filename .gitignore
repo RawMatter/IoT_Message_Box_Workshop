@@ -127,3 +127,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+Workshop/04_Hello_World/Completed_Code/src/secrets.h

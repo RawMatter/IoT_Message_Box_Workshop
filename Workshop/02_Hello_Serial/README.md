@@ -61,3 +61,56 @@ Location | [x] Default
 
 <img src="resources/platformio_wizard.png" width="600em">
 
+
+# File Structure
+You should now have a new VSCode window open with a file structure that looks something like this...
+```
+|-.pio\
+|-.vscode\
+|-include\
+|-lib\
+|-resources\
+|-src\
+|-test\
+|-.gitignore
+|-platformio.ini
+```
+we are going to be working with the `src` folder and `platformio.ini` for the rest of this workshop (who needs testing anyway).
+
+# main.cpp
+Our main file is the heart of our porgram and looks pretty plain to begin with
+
+```
+#include <arduino.h>
+
+void setup(){
+
+}
+
+void loop(){
+
+}
+```
+
+The arduino library significantly simplifies working with micro controllers. Providing a broad range of functions and interoperability across the ecosystem. 
+
+*be aware, Arduino code has an LGPL license and may present problems in commercial applications*
+
+## hello...?
+Lets make sure we can communicate with our micro controller. Writing a program to the non volatile memory of a microcontroller is called *"flashing"* 
+
+So lets build and upload our empty project and overwrite the demo code on the development board.
+
+Open the Platform IO menu via the sidebar icon and select `build` under the `general` folder.
+
+![](resources/platformio_build.png)
+
+If everything went well, you should see a terminal output that describes the memory utilisation and a big green `success` 
+
+![](resources/platformio_build_success.png)
+
+
+
+# Platformio.ini
+This is the magic file that enables platformio to work its magic. Similar to `requirements.txt` or `package.json`. A [TOML](https://toml.io/en/) document, the parameters we modify and define here affect how our code compiles and the libraries that are included.
+

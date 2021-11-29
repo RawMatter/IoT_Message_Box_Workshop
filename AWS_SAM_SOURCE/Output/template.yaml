@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'IoT_Workshop
+
+  Sample SAM Template for IoT_Workshop
+
+  '
+Globals:
+  Function:
+    Timeout: 3
+Resources:
+  StaticPageServer:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://iot-workshop-cf/df24cddd16c53205c11074c0292c4957
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Architectures:
+      - x86_64
+      Events:
+        MessageBox:
+          Type: Api
+          Properties:
+            Path: /
+            Method: get
+  MessageForwarder:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://iot-workshop-cf/7ee198cef17bd8f4e5efcb57f354d8e5
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Architectures:
+      - x86_64
+      Events:
+        MessageBox:
+          Type: Api
+          Properties:
+            Path: /send_message
+            Method: Post
+      Policies:
+      - Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+          - iot:Publish
+          Resource: '*'
+Outputs:
+  ApiGatewayEndpoint:
+    Description: API Gateway endpoint URL
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod

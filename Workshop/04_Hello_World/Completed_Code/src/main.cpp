@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include <TFT_eSPI.h>
-// Add the WiFi library
+// Add the WiFi library and our secrets definition
 #include <WiFi.h>
-
+#include "secrets.h"
 // Button definitions
 const char BUTTON_0 = 0;
 const char BUTTON_1 = 35;
@@ -11,9 +11,7 @@ const char BUTTON_1 = 35;
 TFT_eSPI tft = TFT_eSPI();
 char buff[512];
 
-// WiFi Parameters
-const char* ssid = "IP a Lot";
-const char* password = "I Was Zero Cool";
+// WiFi Parameters are define in the secrets header file
 
 void setup() {
   Serial.begin(115200);
@@ -33,22 +31,25 @@ void setup() {
   tft.println(" Hello World ");
 
   Serial.println("Connecting to WiFi");
+
+  // Initialise the WiFi library with network parameters  
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED){
     delay(200);
     Serial.print(".");
   }
+
   // Output a carridge return
+  Serial.println();
   // There are better string formatters and dedicated serial debugging tools for logging
   // Today we are keeping things simple and matching the style of other resources
-  Serial.println();
   Serial.println("WiFi Connected!");
 
+  // Lets update the user with information on the LCD
   tft.print(WiFi.localIP());
   sleep(3);
 }
 
-int counter = 0;
 
 void loop() {
   // Simple multi line string formatting
@@ -67,6 +68,5 @@ void loop() {
   tft.print(WiFi.macAddress());
 
 
-  counter++;
   sleep(1);
 }

@@ -41,7 +41,7 @@ If you are not already a VSCode convert, today you are.
 
 ### *PlatformIO*
 1. Launch VSCode 
-2. Open the extension manager with the icon or `[ctrl] + [shift] + [x]` on windows
+2. Open the extension manager with the icon or `[ctrl] + [shift] + [p]` on windows
 3. Search for `platformio ide` 
 4. Tricky step.... install the extension
 

@@ -14,9 +14,6 @@ const char BUTTON_1 = 35;
 TFT_eSPI tft = TFT_eSPI();
 char buff[512];
 
-// WiFi Parameters
-const char* SSID = "TheSanctuary_2";
-const char* PASSWORD = "88helicopter88";
 
 // AWS IoT instance
 WiFiClientSecure net = WiFiClientSecure();
@@ -35,7 +32,6 @@ void setup() {
   pinMode(BUTTON_0, INPUT_PULLUP);
   pinMode(BUTTON_1, INPUT_PULLUP);
 
-  Serial.print(private_pem_key);
 
   Serial.print("Initialise LCD");
   
