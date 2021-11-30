@@ -1,18 +1,30 @@
 # Tools
 
-To program it we need to configure a *toolchain*, this is all of the utilities, libraries and drivers required to compile a program and write it to the flash memory of the device and have it execute on boot
+To program a micro we need to configure a *"toolchain"*. This is a collective term for all of the utilities, libraries and drivers required to compile a program and write it to the flash memory of the device.
 
-## Toolchain
+### Terminology
+This workshop uses a number of terms interchangably:
+* micro 
+* micro-controller
+* micro controller
+* MCU
+* embeded device
+* SOC
+* Widget
+* Thingamajig
+
+If in doubt, its almost certainly a reference to the $20 modern marvel attached to your laptop right now
+
+# Toolchain
 Microcontroller projects, like much of computer science have never been more accessible and this is thanks to the open source community. 
 
-Arduino kicked this off in a big way back in the early 2000's their big innovation was abstracting the complexity of registers and creating a bootloader that made it easy to upload code via a serial port
+Arduino kicked this off in a big way back in the early 2000's their  innovation was abstracting the complexity of registers and creating a bootloader that made it easy to upload code via a serial port.
 For those who dabbled, their IDE was a strange Java headache that still gives me night terrors
 
-Today, we are going to be doing all of our work inside VSCode, its catching on as an IDE....
-We're going to be using a fairly chunky native plugin called Platform IO
+Today, we are going to be doing all of our work using VSCode, its catching on as an IDE.... 
 
-This simplifies a whole bunch of things:
-* All the managers:
+Platform IO is a native extension for VSCode and this simplifies some teedious parts of developing software for micros:
+* It has all the managers:
     * Common boards
     * Libraries 
     * Platforms
@@ -44,7 +56,9 @@ If you are not already a VSCode convert, today you are.
 2. Open the extension manager with the icon or `[ctrl] + [shift] + [p]` on windows
 3. Search for `platformio ide` 
 4. Tricky step.... install the extension
+5. Wait..
 
-
-
+<p align="center" style="margin-top:60px">
+<img src="https://media.giphy.com/media/3y0oCOkdKKRi0/giphy.gif"/>
+</p>
 

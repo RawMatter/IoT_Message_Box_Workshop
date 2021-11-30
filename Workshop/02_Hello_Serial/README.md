@@ -45,9 +45,9 @@ From the projects screen select `create new project`
 ![](resources/platformio_create.png)
 
 ## Board Wizard
-The board wizard is a blessing and a curse. It has over 1000 of the most common boards, but there are many other variants not listed, especially from chinese companies. Most development boards from popular manufacturers like [Adafruit](https://adafruit.com), [Sparkfun](https://sparkfun.com), [Arduino](https://arduino.com) are available...... 
+The board wizard is a blessing and a curse. It has over 1000 of the most common boards. Most development boards from popular manufacturers like [Adafruit](https://adafruit.com), [Sparkfun](https://sparkfun.com), [Arduino](https://arduino.com) are available, but there are many other variants not listed, especially from chinese companies 
 
-Unfortunately the bord for today is not! So we're going to use a substitute that is similar in all of the ways that matter.
+Unfortunately the bord for today is not included! So we're going to use a substitute that is similar in all of the ways that matter.
 
 ### Parameters:
 | Field | Setting |
@@ -65,22 +65,23 @@ Location | [x] Default
 # File Structure
 You should now have a new VSCode window open with a file structure that looks something like this...
 ```
-|-.pio\
-|-.vscode\
-|-include\
-|-lib\
-|-resources\
-|-src\
-|-test\
-|-.gitignore
-|-platformio.ini
+|- .pio\
+|- .vscode\
+|- include\
+|- lib\
+|- resources\
+|- src\
+|--- main.cpp
+|- test\
+|- .gitignore
+|- platformio.ini
 ```
 we are going to be working with the `src` folder and `platformio.ini` for the rest of this workshop (who needs testing anyway).
 
 # main.cpp
 Our main file is the heart of our porgram and looks pretty plain to begin with
 
-```
+```cpp
 #include <arduino.h>
 
 void setup(){
@@ -92,9 +93,17 @@ void loop(){
 }
 ```
 
-The arduino library significantly simplifies working with micro controllers. Providing a broad range of functions and interoperability across the ecosystem. 
+The arduino library simplifies working with micro controllers. Providing a broad range of functions and interoperability across a number of microcontroller products. 
 
-*be aware, Arduino code has an LGPL license and may present problems in commercial applications*
+*be aware, Arduino libraries have a LGPL license and may present problems in commercial applications*
+
+Code is executed in two phases. 
+
+1. Initialisation and configuration code that only needs to be executed once is included in the `Setup` subroutine and is executed first
+
+Then... 
+
+2. All code within the `loop` subroutine is repeated until the end of time (or the batteries run flat) 
 
 ## hello...?
 Lets make sure we can communicate with our micro controller. Writing a program to the non volatile memory of a microcontroller is called *"flashing"* 
@@ -110,7 +119,119 @@ If everything went well, you should see a terminal output that describes the mem
 ![](resources/platformio_build_success.png)
 
 
+With the boilerplate code compiling, lets try to upload it to our device. Within the *Project Tasks* menu, select `Upload`
+
+![](resources/platformio_upload.png)
+
+Now you can watch characters zip across the terminal again...
+
+
+![](resources/platformio_upload_success.png)
+
+
+<p align="center" style="margin-top:30px; margin-bottom:30px">
+<img src="https://media.giphy.com/media/Od0QRnzwRBYmDU3eEO/giphy.gif" width='200em'>
+</p>
+
+# Serial, no longer just for breakfast
+Some cloud native whipper snappers may have never experienced a serial port before. Others may have remembered them as funny little 9 pin cables that connected to their dial up modem.
+
+Serial ports are ubiquitous with micro controllers and enable us to flash programs and interact with code running on the hardware. Our development board has a USB to Serial converter built in and Platform IO will automatically identify the `virtual com port` 
+
+## Com port identification (optional)
+You can confirm the presence of your COM port via the `devices` tab on the `PIO Home` page. 
+
+![](resources/platformio_devices.png)
+
+All available com ports will be listed. More advanced applications that use Over the Air \[OTA] updates can be configured here 
+
+![](resources/platformio_device_list.png)
+
+## Adding Serial to our project
+We will use the Serial port to monitor the state of our program and make sure it is doing what we expect. 
+
+To enable this we must instruct the micro to initialise the interface and the speed to communicate at
+
+```cpp
+void setup(){
+    Serial.begin(115200);
+
+    // Lets also give it something to say
+    Serial.println("Hello World");
+}
+```
+
+Done!
+
+Now lets flash the board again, but this time we want to `monitor` the serial port output as well. By now you've probably seen the `Upload and Monitor` button in the Project tasks panel. This button will:
+1. Compile (build) your program
+2. Upload it to the micro
+3. Open a serial terminal after upload to monitor the output
+
+Essentially it does everything we need in one click. Press the button and lets flash our new code!
+<p align="center" style="margin-top:30px; margin-bottom:30px">
+<img src="https://media.giphy.com/media/wdh1SvEn0E06I/giphy.gif"></p>
+
+### Gibberish?
+Got some funky characters? You've fallen right into my trap...
 
 # Platformio.ini
-This is the magic file that enables platformio to work its magic. Similar to `requirements.txt` or `package.json`. A [TOML](https://toml.io/en/) document, the parameters we modify and define here affect how our code compiles and the libraries that are included.
+This is the magic file that enables platformio to work its wonders. Similar to `requirements.txt` in python or `package.json` with node. This `.ini` file is a  [TOML](https://toml.io/en/) formatted document, the parameters we modify and define here affect how our code compiles and the libraries that are included.
 
+By default, the monitor opens the serial port with a baud rate of 9600. To match the ESP32 bootloaders native speed, we should set this to 115200 as well. 
+
+Edit your `platformio.ini` file to include the line `monitor_speed = 115200`
+
+Flash it again and see if you're still playing the hardware equivalent of the game 'telephone'.
+
+# Buttons!
+Lets add some interactivity now. Our development board has two larger white buttons. We can use these to interact with the device and change the output on the serial port. 
+
+### Definitions
+First we need to define which physical input pins on the microcontroller these buttons are connected to. Often you can find this in schematics, datasheets or product descriptions. We are making it easy today and just telling you, add the following pin defintions to the top of the file.
+
+```cpp
+#include <Arduino.h>
+
+// Define simple names for the hardware buttons
+// 1 - Easier to remember
+// 2 - If we change the connection in the future we only need to make one change in the code
+const char BUTTON_0 = 0;
+const char BUTTON_1 = 35;
+```
+### Configuration
+We also need to configure the micro controller so that it can structure the internal circuitry to read these as inputs. We only need to tell the microcontroller to do this once, so this is part of the `setup` routine.
+```cpp
+// Configure the IO pins as inputs
+    // Inputs cannot "float" they need an anchor
+    // This is in the form of a pull up resistor built into the chip that we can enable 
+    pinMode(BUTTON_0, INPUT_PULLUP);
+    pinMode(BUTTON_1, INPUT_PULLUP);
+```
+### Reading
+Finally we can do something with these buttons in the *main loop* of our program. Lets read their values and output a message to the serial port when they are pressed.
+```cpp
+{
+    Serial.println("loop");
+    // read the digital input BUTTON_0
+    if(digitalRead(BUTTON_0) == false){
+        Serial.println("Button 0 is pressed");
+    }
+
+    // read the digital input BUTTON_1
+    if (digitalRead(BUTTON_1) == false){
+        Serial.println("Button 1 is pressed");
+    }
+    
+    // wait a second before repeating the loop
+    sleep(1);
+}
+```
+What do you see on the monitor when you flash these changes?
+
+# Success!
+You've now programmed a micro controller and used it to interact with some physical buttons.
+<p align="center" style="margin-top:30px; margin-bottom:30px">
+<img src="https://media.giphy.com/media/l4HodBpDmoMA5p9bG/giphy.gif"></p>
+
+Some additional notes are available in the `Completed_Code` section as well. Lets do something with that display next!
