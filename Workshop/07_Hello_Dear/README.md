@@ -18,6 +18,15 @@ I need to make some coin back from hosting this workshop, so the next step invol
 
 `https://iot-workshop-cf.s3.ap-southeast-2.amazonaws.com/template.yaml`
 
+In the AWS Console, open `cloud formation`
+
+Create a new stack
+
+`create stack` > `with new resources`
+
+select `Amazon S3 Url` and input the URL above
+Click through and wait for the URL from the Outputs
+
 ## Resources it deploys
 This will save us diving into an AWS Lambda workshop too. It creates a few resources
 1. An API gateway to direct API calls to lambda functions
