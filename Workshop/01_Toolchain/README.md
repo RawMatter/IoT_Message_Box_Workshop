@@ -64,7 +64,8 @@ Driver problems with hardware are unfortunately not uncommon, This should hopefu
 
 Big thanks to Colby!
 
-Install Drivers:
+### Install Drivers
+Make sure you enable the driver in security & privacy settings
 https://github.com/WCHSoftGroup/ch34xser_macos
 
 In the terminal identify the port with
