@@ -81,6 +81,7 @@ tty.wchusbserial1234567
 Update your `platformio.ini` file with a specified port
 ```
 upload_port = /dev/tty.wchusbserial1234567
+monitor_port = /dev/tty.wchusbserial1234567
 ```
 <p align="center" style="margin-top:60px">
 <img src="https://media.giphy.com/media/3y0oCOkdKKRi0/giphy.gif"/>
