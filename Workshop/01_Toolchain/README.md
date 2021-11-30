@@ -58,6 +58,30 @@ If you are not already a VSCode convert, today you are.
 4. Tricky step.... install the extension
 5. Wait..
 
+
+# Big Sur is a big headache
+Driver problems with hardware are unfortunately not uncommon, This should hopefully get you back on track!
+
+Big thanks to Colby!
+
+Install Drivers:
+https://github.com/WCHSoftGroup/ch34xser_macos
+
+In the terminal identify the port with
+
+```bash
+ls /dev | grep tty.wch
+```
+
+Should see something like....
+```
+tty.wchusbserial1234567
+```
+
+Update your `platformio.ini` file with a specified port
+```
+upload_port = /dev/tty.wchusbserial1234567
+```
 <p align="center" style="margin-top:60px">
 <img src="https://media.giphy.com/media/3y0oCOkdKKRi0/giphy.gif"/>
 </p>
